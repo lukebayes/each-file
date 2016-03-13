@@ -16,8 +16,9 @@ want to wait for phased file system traversal to complete in order to begin
 executing tests, and we also want to know when all files have been examined.
 
 This library started life as a
-[question on Stackoverflow](http://goo.gl/AwAQpN) and eventually a
-[gist](https://gist.github.com/lukebayes/814063).
+[question on Stackoverflow](http://goo.gl/AwAQpN) and quickly became a
+ [gist](https://gist.github.com/lukebayes/814063) and eventually felt useful
+ enough to get into a slightly more shareable form.
 
 ## Examples
 
@@ -25,21 +26,27 @@ This library started life as a
 var eachFile = require('@lukebayes/each-file');
 
 // Get all files (not directories) forward of ./test
-eachFile('./test', function(err, file) {
-  console.log('File:', file);
+eachFile('./test', function(err, file, stat) {
+  if (err) throw err;
+
+  console.log('File:', file, stat);
 });
 
 
 // Get all files (not directories) forward of ./test with a name that matches
 // the provided regular expression.
-eachFile.matching(/*_test.js/, './test', function(err, file) {
-  console.log('Matched File:', file);
+eachFile.matching(/*_test.js/, './test', function(err, file, stat) {
+  if (err) throw err;
+
+  console.log('Matched File:', file, stat);
 });
 
 
 // Read the contents of each file forward of ./test that matches the provided
 // regular expression.
-eachFile.readMatching(/*_test.js/, './test', function(err, body) {
+eachFile.readMatching(/*_test.js/, './test', function(err, file, stat, body) {
+  if (err) throw err;
+
   console.log('Body:', body);
 });
 
