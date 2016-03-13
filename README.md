@@ -15,6 +15,10 @@ of thousands of files spread over a relatively deep file system tree. We do not
 want to wait for phased file system traversal to complete in order to begin
 executing tests, and we also want to know when all files have been examined.
 
+This library started life as a
+[question on Stackoverflow](http://goo.gl/AwAQpN) and eventually a
+[gist](https://gist.github.com/lukebayes/814063).
+
 ## Examples
 
 ```

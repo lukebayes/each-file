@@ -1,4 +1,5 @@
 var fs = require('fs');
+var nullFunction = require('./null_function');
 
 /**
  * Call fileHandler with the file name and file Stat for each file found inside
@@ -32,14 +33,16 @@ var fs = require('fs');
  *     }
  *   });
  */
-
-var nullFunction = function() {};
-
-module.exports = function(directory, opt_fileHandler, completeHandler) {
-  var filesToCheck = 0;
+var orDirectory = function(directory, opt_fileHandler, opt_completeHandler) {
   var checkedFiles = [];
   var checkedStats = [];
+  var completeHandler = opt_completeHandler || nullFunction;
   var fileHandler = opt_fileHandler || nullFunction;
+  var filesToCheck = 0;
+  var errorHandler = function(err) {
+    fileHandler(err);
+    completeHandler(err);
+  };
 
   directory = (directory) ? directory : './';
 
@@ -48,7 +51,7 @@ module.exports = function(directory, opt_fileHandler, completeHandler) {
   };
 
   var checkComplete = function() {
-    if (filesToCheck == 0 && completeHandler) {
+    if (filesToCheck == 0) {
       completeHandler(null, checkedFiles, checkedStats);
     }
   };
@@ -57,7 +60,7 @@ module.exports = function(directory, opt_fileHandler, completeHandler) {
     filesToCheck++;
     fs.stat(fileOrDirectory, function(err, stat) {
       filesToCheck--;
-      if (err) return fileHandler(err);
+      if (err) return errorHandler(err);
       checkedFiles.push(fileOrDirectory);
       checkedStats.push(stat);
       fileHandler(null, fileOrDirectory, stat);
@@ -72,7 +75,7 @@ module.exports = function(directory, opt_fileHandler, completeHandler) {
     filesToCheck++;
     fs.readdir(dir, function(err, files) {
       filesToCheck--;
-      if (err) return fileHandler(err);
+      if (err) return errorHandler(err);
       files.forEach(function(file, index) {
         file = fullFilePath(dir, file);
         onFileOrDirectory(file);
@@ -83,4 +86,6 @@ module.exports = function(directory, opt_fileHandler, completeHandler) {
 
   onFileOrDirectory(directory);
 };
+
+module.exports = orDirectory;
 
