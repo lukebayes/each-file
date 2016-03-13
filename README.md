@@ -35,7 +35,7 @@ eachFile('./test', function(err, file, stat) {
 
 // Get all files (not directories) forward of ./test with a name that matches
 // the provided regular expression.
-eachFile.matching(/*_test.js/, './test', function(err, file, stat) {
+eachFile.matching(/_test.js/, './test', function(err, file, stat) {
   if (err) throw err;
 
   console.log('Matched File:', file, stat);
@@ -44,7 +44,7 @@ eachFile.matching(/*_test.js/, './test', function(err, file, stat) {
 
 // Read the contents of each file forward of ./test that matches the provided
 // regular expression.
-eachFile.readMatching(/*_test.js/, './test', function(err, file, stat, body) {
+eachFile.readMatching(/_test.js/, './test', function(err, file, stat, body) {
   if (err) throw err;
 
   console.log('Body:', body);
