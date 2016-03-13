@@ -22,7 +22,7 @@ This library started life as a
 
 ## Examples
 
-```
+```javascript
 var eachFile = require('@lukebayes/each-file');
 
 // Get all files (not directories) forward of ./test
