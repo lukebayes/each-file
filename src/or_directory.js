@@ -10,6 +10,8 @@ var fs = require('fs');
  *
  * Following is an example of a simple usage:
  *
+ *   var eachFile = require('@lukebayes/each-file');
+ *
  *   eachFileOrDirectory('test/', function(err, file, stat) {
  *     if (err) throw err;
  *     if (!stat.isDirectory()) {

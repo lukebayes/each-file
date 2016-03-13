@@ -1,5 +1,5 @@
 {
-  "name": "each-file",
+  "name": "@lukebayes/each-file",
   "version": "1.0.0",
   "description": "Enhancements for node's basic file utils",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "npm test"
   },
   "author": "",
-  "license": "ISC",
+  "license": "./LICENSE",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
