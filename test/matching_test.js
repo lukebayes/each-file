@@ -4,16 +4,16 @@ var eachFile = require('../');
 var fs = require('fs');
 var sinon = require('sinon');
 
-describe('eachFile', () => {
+describe('matching', () => {
   it('calls file handler without complete handler', done => {
-    eachFile(__dirname + '/paths/missing-dir', err => {
+    eachFile.matching(/foo/, __dirname + '/paths/missing-dir', err => {
       assert.equal(err.code, eachFile.ENOENT);
       done();
     });
   });
 
   it('calls complete handler without file handler', done => {
-    eachFile(__dirname + '/paths/missing-dir', null, err => {
+    eachFile.matching(/foo/, __dirname + '/paths/missing-dir', null, err => {
       assert.equal(err.code, eachFile.ENOENT);
       done();
     });
@@ -21,30 +21,28 @@ describe('eachFile', () => {
 
   it('calls complete with empty path', done => {
     const fileHandler = sinon.spy();
-
-    eachFile(__dirname + '/paths/empty-dir', fileHandler,
+    eachFile.matching(/foo/, __dirname + '/paths/empty-dir', fileHandler,
       (err, files) => {
         assert.equal(files.length, 0);
+        assert(!err);
         assert.equal(fileHandler.callCount, 0, 'Did not call the file handler');
         done();
       });
   });
 
   it('calls the file handler', done => {
-    eachFile(__dirname, (err, file) => {
-      if (file.indexOf('or_directory_test.js') > -1) {
+    eachFile.matching(/foo/, __dirname + '/paths/foo', (err, file) => {
+      if (file.indexOf('foo') > -1) {
         done();
       }
     });
   });
 
   it('calls the complete handler', done => {
-    eachFile(__dirname, null, (err, files) => {
-      files.forEach(file => {
-        if (file.indexOf('or_directory_test.js') > -1) {
-          done();
-        }
-      });
+    eachFile.matching(/foo/, __dirname, null, (err, files) => {
+      assert.equal(files.length, 1);
+      assert(files[0].indexOf('foo') > -1);
+      done();
     });
   });
 });

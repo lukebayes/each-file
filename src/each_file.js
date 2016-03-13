@@ -29,7 +29,5 @@ var eachFile = function(path, opt_fileHandler, opt_completeHandler) {
 // Constants
 eachFile.ENOENT = 'ENOENT';
 
-// Literate interface methods
-eachFile.orDirectory = require('./or_directory');
-
 module.exports = eachFile;
+

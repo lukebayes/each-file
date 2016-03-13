@@ -13,7 +13,7 @@ var nullFunction = require('./null_function');
  *
  *   var eachFile = require('@lukebayes/each-file');
  *
- *   eachFileOrDirectory('test/', function(err, file, stat) {
+ *   eachFile.orDirectory('test/', function(err, file, stat) {
  *     if (err) throw err;
  *     if (!stat.isDirectory()) {
  *       console.log(">> Found file: " + file);
@@ -23,8 +23,9 @@ var nullFunction = require('./null_function');
  * Following is an example that waits for all files and directories to be
  * scanned and then uses the entire result to do somthing:
  *
- *   eachFileOrDirectory('test/', null, function(files, stats) {
+ *   eachFile.orDirectory('test/', null, function(files, stats) {
  *     if (err) throw err;
+ *
  *     var len = files.length;
  *     for (var i = 0; i < len; i++) {
  *       if (!stats[i].isDirectory()) {
