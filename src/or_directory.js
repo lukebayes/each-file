@@ -32,10 +32,14 @@ var fs = require('fs');
  *     }
  *   });
  */
-module.exports = function(directory, fileHandler, completeHandler) {
+
+var nullFunction = function() {};
+
+module.exports = function(directory, opt_fileHandler, completeHandler) {
   var filesToCheck = 0;
   var checkedFiles = [];
   var checkedStats = [];
+  var fileHandler = opt_fileHandler || nullFunction;
 
   directory = (directory) ? directory : './';
 
@@ -75,7 +79,7 @@ module.exports = function(directory, fileHandler, completeHandler) {
       });
       checkComplete();
     });
-  }
+  };
 
   onFileOrDirectory(directory);
 };
